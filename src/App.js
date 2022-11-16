@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import pauseMobile from "./images/pattern-divider-mobile.svg";
+import pauseDesktop from "./images/pattern-divider-desktop.svg";
+import dice from "./images/icon-dice.svg";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [text, setText] = useState([]);
+
+  const fetchAdvice = async () => {
+    const res = await fetch("https://api.adviceslip.com/advice");
+    const data = await res.json();
+    setText(data);
+  };
+
+  useEffect(() => {
+    fetchAdvice();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <h1>Advice #{text.slip.id}</h1>
+      <p>{text.slip.advice}</p>
+      <picture>
+        <source media="(min-width: 768px)" srcSet={pauseDesktop} />
+        <img src={pauseMobile} alt="" />
+      </picture>
+      <div>
+        <button onClick={fetchAdvice}>
+          <img src={dice} alt="" />
+        </button>
+      </div>
     </div>
   );
 }
