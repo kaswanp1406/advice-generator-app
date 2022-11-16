@@ -9,7 +9,7 @@ function App() {
   const fetchAdvice = async () => {
     const res = await fetch("https://api.adviceslip.com/advice");
     const data = await res.json();
-    setText(data);
+    setText(data.slip);
   };
 
   useEffect(() => {
@@ -18,8 +18,8 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Advice #{text.slip.id}</h1>
-      <p>{text.slip.advice}</p>
+      <h1>Advice #{text.id}</h1>
+      <p>{text.advice}</p>
       <picture>
         <source media="(min-width: 768px)" srcSet={pauseDesktop} />
         <img src={pauseMobile} alt="" />
